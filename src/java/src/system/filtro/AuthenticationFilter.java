@@ -19,6 +19,7 @@ public class AuthenticationFilter implements Filter {
 
     private ServletContext context;
     private Usuario usuario;
+    private final String urlContexto = "bigupetshop";
 
     @Override
     public void init(FilterConfig fConfig) throws ServletException {
@@ -38,22 +39,22 @@ public class AuthenticationFilter implements Filter {
         String urlRequest = req.getRequestURI();
         boolean check = false;
         switch (urlRequest) {
-            case "/sigbase/":
-            case "/sigbase/loginSigbase.jsp":
-            case "/sigbase/Login.jsp"://servlet
-            case "/sigbase/redefinirSenha.jsp"://pagina
-            case "/sigbase/AltSenha.jsp"://servlet
-            case "/sigbase/LogOff.jsp"://servlet
+            case "/" + urlContexto + "/":
+            case "/" + urlContexto + "/loginSigbase.jsp":
+            case "/" + urlContexto + "/bigupetshop/Login.jsp"://servlet
+            case "/" + urlContexto + "/redefinirSenha.jsp"://pagina
+            case "/" + urlContexto + "/AltSenha.jsp"://servlet
+            case "/" + urlContexto + "/LogOff.jsp"://servlet
             //=============================================================OFICINA BH-50
-            case "/sigbase/oficina/oficinabh50.jsp"://pagina
-            case "/sigbase/oficina/Oficinabh50.jsp"://servlet
-            case "/sigbase/oficina/Bh50Consult.jsp"://servlet
-            case "/sigbase/oficina/Bh50ConsultOs.jsp"://servlet
+            case "/" + urlContexto + "/oficina/oficinabh50.jsp"://pagina
+            case "/" + urlContexto + "/oficina/Oficinabh50.jsp"://servlet
+            case "/" + urlContexto + "/oficina/Bh50Consult.jsp"://servlet
+            case "/" + urlContexto + "/oficina/Bh50ConsultOs.jsp"://servlet
             //=============================================================OFICINA BH-34
-            case "/sigbase/telematica/telematica.jsp"://pagina
-            case "/sigbase/telematica/Oficinabh34.jsp"://servlet
-            case "/sigbase/telematica/SateConsult.jsp"://servlet
-            case "/sigbase/telematica/SateConsultOs.jsp"://servlet
+            case "/" + urlContexto + "/telematica/telematica.jsp"://pagina
+            case "/" + urlContexto + "/telematica/Oficinabh34.jsp"://servlet
+            case "/" + urlContexto + "/telematica/SateConsult.jsp"://servlet
+            case "/" + urlContexto + "/telematica/SateConsultOs.jsp"://servlet
                 check = true;
                 break;
         }
@@ -61,26 +62,26 @@ public class AuthenticationFilter implements Filter {
             switch (usuario.getAcesso()) {
                 case 0: //=============================================================ADMIN
                     switch (urlRequest) {
-                        case "/sigbase/admin/admin_home.jsp":
-                        case "/sigbase/admin/admin_cadastro.jsp":
-                        case "/sigbase/admin/ListarUsuario.jsp"://servlet
-                        case "/sigbase/admin/ExibirUsuario.jsp"://pagina
-                        case "/sigbase/admin/AttUsuario.jsp"://servlet
-                        case "/sigbase/admin/admin/CadastroUsuario.jsp"://servlet
+                        case "/" + urlContexto + "/admin/admin_home.jsp":
+                        case "/" + urlContexto + "/admin/admin_cadastro.jsp":
+                        case "/" + urlContexto + "/admin/ListarUsuario.jsp"://servlet
+                        case "/" + urlContexto + "/admin/ExibirUsuario.jsp"://pagina
+                        case "/" + urlContexto + "/admin/AttUsuario.jsp"://servlet
+                        case "/" + urlContexto + "/admin/admin/CadastroUsuario.jsp"://servlet
                             check = true;
                             break;
                     }
                     break;
                 case 104: //=============================================================MERCATO
                     switch (urlRequest) {
-                        case "/sigbase/bh10/mercato/mercato_home.jsp":
+                        case "/" + urlContexto + "/bh10/mercato/mercato_home.jsp":
                             check = true;
                             break;
                     }
                     break;
                 case 341: //=============================================================BH-34
                     switch (urlRequest) {
-                        case "/sigbase/bh30/bh34/bh34_home.jsp":
+                        case "/" + urlContexto + "/bh30/bh34/bh34_home.jsp":
                             check = true;
                             break;
                     }
@@ -90,16 +91,16 @@ public class AuthenticationFilter implements Filter {
                     check = true;
                     break;
             }
-            if(usuario.getAdmin() == 1){
+            if (usuario.getAdmin() == 1) {
                 switch (urlRequest) {
-                        case "/sigbase/admin/admin_cadastro.jsp":
-                        case "/sigbase/admin/ListarUsuario.jsp"://servlet
-                        case "/sigbase/admin/ExibirUsuario.jsp"://pagina
-                        case "/sigbase/admin/AttUsuario.jsp"://servlet
-                        case "/sigbase/admin/CadastroUsuario.jsp"://servlet
-                            check = true;
-                            break;
-                    }
+                    case "/" + urlContexto + "/admin/admin_cadastro.jsp":
+                    case "/" + urlContexto + "/admin/ListarUsuario.jsp"://servlet
+                    case "/" + urlContexto + "/admin/ExibirUsuario.jsp"://pagina
+                    case "/" + urlContexto + "/admin/AttUsuario.jsp"://servlet
+                    case "/" + urlContexto + "/admin/CadastroUsuario.jsp"://servlet
+                        check = true;
+                        break;
+                }
             }
         }
         if (check) {
