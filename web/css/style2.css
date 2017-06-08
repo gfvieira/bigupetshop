@@ -1,0 +1,108 @@
+#header {
+    background-color: #17882c;
+    background-image: -webkit-linear-gradient(top, #17882c, #00510f);
+    background-image: linear-gradient(to bottom, #17882c, #00510f);
+}
+#header a {
+    color: #FFF;
+}
+#header .social .fa:hover:before {
+    color: #2c66ce;
+}
+#header .header-top .shortcuts a {
+    color: #FFF;
+}
+#header .header-top .shortcuts a:hover {
+    color: #548ff9;
+}
+#header .header-top .shortcuts li span {
+    background-color: #FFF;
+    color: #000;
+}
+#header .header-top .shortcuts li:hover span {
+    background-color: #548ff9;
+}
+#header .header-top .accessibility {
+    border-color: #2c66ce !important;
+}
+#header .header-top .accessibility a {
+    color: #2c66ce;
+}
+#header .header-top .accessibility a:hover {
+    color: #548ff9;
+}
+#header .search-form .btn-default {
+    color: #2f4c73;
+}
+.breadcrumb a {
+    color: #2c66ce;
+}
+#navbar {
+    background-color: #01420a;
+}
+#navbar a {
+    color: #FFF;
+}
+#navbar .menu.secondary li {
+    border-color: #FFF;
+}
+.navbar-toggle .icon-bar {
+    background: #456aad;
+}
+.navbar-toggle h4 {
+    color: #456aad;
+    text-transform: uppercase;
+}
+.navbar-toggle {
+    border-color: #456aad;
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+}
+.footer {
+    background-color: #17882c;
+    background-image: -webkit-linear-gradient(top, #17882c, #00510f);
+    background-image: linear-gradient(to top, #17882c, #00510f);
+    color: #FFF;
+}
+.footer .block .content a {
+    color: #FFF;
+}
+.footer .block .content a:hover,
+.footer .block .content a:focus {
+    color: #FFF;
+}
+.footer .block-title {
+    color: #FFF;
+}
+#footer-brasil {
+    background-color: #0042b2;
+}
+.footer-column .block {
+    border-color: #8bacdf;
+}
+.region-sidebar-first .block-title {
+    color: #17882c;
+    border-top: 4px solid #17882c;
+}
+.region-sidebar-first .block-no-title li a {
+    color: #2c66ce;
+}
+.region-sidebar-first .active {
+    border-color: #2c66ce;
+}
+.font-govbr:before {
+    color: #165abf;
+}
+.font-govbr:hover:before {
+    color: #0e3987;
+}
+.font-govbr-square:before {
+    background: #165abf;
+}
+.font-govbr-square:hover:before {
+    background: #0e3987;
+}
+@media (max-width: 768px) {
+    #sidebar-first-menu {
+        background-color: #d5d5d5;
+    }
+}
