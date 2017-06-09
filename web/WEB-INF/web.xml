@@ -11,6 +11,7 @@
         <servlet-name>LogOff</servlet-name>
         <servlet-class>src.login.LogOff</servlet-class>
     </servlet>
+    <servlet/>
     <servlet-mapping>
         <servlet-name>ErrorServlet</servlet-name>
         <url-pattern>/error</url-pattern>
@@ -59,30 +60,6 @@
         <servlet-name>AttUsuario</servlet-name>
         <servlet-class>src.admin.AttUsuario</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>Oficinabh34</servlet-name>
-        <servlet-class>src.oficina.telematica.Oficinabh34</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>Oficinabh50</servlet-name>
-        <servlet-class>src.oficna.bh50.Oficinabh50</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SateConsult</servlet-name>
-        <servlet-class>src.oficina.telematica.SateConsult</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>Bh50Consult</servlet-name>
-        <servlet-class>src.oficna.bh50.Bh50Consult</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SateConsultOs</servlet-name>
-        <servlet-class>src.oficina.telematica.SateConsultOs</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>Bh50ConsultOs</servlet-name>
-        <servlet-class>src.oficna.bh50.Bh50ConsultOs</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>CadastroUsuario</servlet-name>
         <url-pattern>/admin/CadastroUsuario.jsp</url-pattern>
@@ -106,30 +83,6 @@
     <servlet-mapping>
         <servlet-name>AttUsuario</servlet-name>
         <url-pattern>/admin/AttUsuario.jsp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Oficinabh34</servlet-name>
-        <url-pattern>/telematica/Oficinabh34.jsp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Oficinabh50</servlet-name>
-        <url-pattern>/oficina/Oficinabh50.jsp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SateConsult</servlet-name>
-        <url-pattern>/telematica/SateConsult.jsp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Bh50Consult</servlet-name>
-        <url-pattern>/oficina/Bh50Consult.jsp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SateConsultOs</servlet-name>
-        <url-pattern>/telematica/SateConsultOs.jsp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Bh50ConsultOs</servlet-name>
-        <url-pattern>/oficina/Bh50ConsultOs.jsp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LogOff</servlet-name>

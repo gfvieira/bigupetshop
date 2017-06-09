@@ -40,7 +40,7 @@ public class AuthenticationFilter implements Filter {
         boolean check = false;
         switch (urlRequest) {
             case "/" + urlContexto + "/":
-            case "/" + urlContexto + "/loginSigbase.jsp":
+            case "/" + urlContexto + "/login.jsp":
             case "/" + urlContexto + "/bigupetshop/Login.jsp"://servlet
             case "/" + urlContexto + "/redefinirSenha.jsp"://pagina
             case "/" + urlContexto + "/AltSenha.jsp"://servlet

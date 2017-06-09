@@ -14,24 +14,24 @@
 
         <!-- Bootstrap core CSS -->
         <!-- Bootstrap core CSS -->
-        <link href="../../assets/css/bootstrap.css" rel="stylesheet">
+        <link href="../assets/css/bootstrap.css" rel="stylesheet">
         <!--external css-->
-        <link href="../../assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="../../assets/css/zabuto_calendar.css">
-        <link rel="stylesheet" type="text/css" href="../../assets/js/gritter/css/jquery.gritter.css" />
-        <link rel="stylesheet" type="text/css" href="../../assets/lineicons/style.css">    
+        <link href="../assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../assets/css/zabuto_calendar.css">
+        <link rel="stylesheet" type="text/css" href="../assets/js/gritter/css/jquery.gritter.css" />
+        <link rel="stylesheet" type="text/css" href="../assets/lineicons/style.css">    
 
         <!-- Custom styles for this template -->
-        <link href="../../assets/css/style.css" rel="stylesheet">
-        <link href="../../assets/css/style-responsive.css" rel="stylesheet">
+        <link href="../assets/css/style.css" rel="stylesheet">
+        <link href="../assets/css/style-responsive.css" rel="stylesheet">
 
-        <script src="../../assets/js/chart-master/Chart.js"></script>
+        <script src="../assets/js/chart-master/Chart.js"></script>
         <script language=javascript type="text/javascript">
             dayName = new Array("Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado");
             monName = new Array("janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro");
             now = new Date;
         </script>
-        <script src="../../assets/js/time_session.js" type="text/javascript"></script>
+        <script src="../assets/js/time_session.js" type="text/javascript"></script>
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -52,7 +52,7 @@
                     <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Clique Aqui Para Abrir/Fechar Menu"></div>
                 </div>
                 <!--logo start-->
-                <a href="#" class="logo"><b>SIG-BASE || Mercato 3.0</b></a>
+                <a href="#" class="logo"><b>SIG-BASE || <%out.print(usuario.getTitulo());%></b></a>
                 <!--logo end-->
                 <div class="top-menu">
                     <ul class="nav pull-right top-menu">
@@ -69,8 +69,13 @@
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a href="#">Perfil</a></li>
                                     <li><a href="#">Alterar Senha</a></li>
+                                        <%if (usuario.getAdmin() == 1) {%>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="/sigbase/LogOff.jsp">Sair</a></li>
+                                    <li><a href="/bigupetshop/admin/admin_cadastro.jsp">Cadastrar Usuario</a></li>
+                                    <li><a href="/bigupetshop/admin/ListarUsuario.jsp?type=99">Listar Usuarios</a></li>
+                                    <%}%>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="/bigupetshop/LogOff.jsp">Sair</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -94,7 +99,7 @@
                         </h5>
                         <h5 class="centered"><div id="txt"></div></h5>
                         <li class="mt">
-                            <a class="active" href="#">
+                            <a class="active" href="<%usuario.getHome();%>">
                                 <i class="fa fa-dashboard"></i>
                                 <span>Principal <%out.print(usuario.getSetor());%></span>
                             </a>
@@ -118,16 +123,16 @@
             </section>
             <!--main content end-->
         </section>
-        <script src="../../assets/js/jquery.js"></script>
-        <script src="../../assets/js/jquery-1.8.3.min.js"></script>
-        <script src="../../assets/js/bootstrap.min.js"></script>
-        <script class="include" type="text/javascript" src="../../assets/js/jquery.dcjqaccordion.2.7.js"></script>
-        <script src="../../assets/js/jquery.scrollTo.min.js"></script>
-        <script src="../../assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-        <script src="../../assets/js/jquery.sparkline.js"></script>
+        <script src="../assets/js/jquery.js"></script>
+        <script src="../assets/js/jquery-1.8.3.min.js"></script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+        <script class="include" type="text/javascript" src="../assets/js/jquery.dcjqaccordion.2.7.js"></script>
+        <script src="../assets/js/jquery.scrollTo.min.js"></script>
+        <script src="../assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+        <script src="../assets/js/jquery.sparkline.js"></script>
         <!--common script for all pages-->
-        <script src="../../assets/js/common-scripts.js"></script>
-        <script type="text/javascript" src="../../assets/js/gritter/js/jquery.gritter.js"></script>
-        <script type="text/javascript" src="../../assets/js/gritter-conf.js"></script>		
+        <script src="../assets/js/common-scripts.js"></script>
+        <script type="text/javascript" src="../assets/js/gritter/js/jquery.gritter.js"></script>
+        <script type="text/javascript" src="../assets/js/gritter-conf.js"></script>		
     </body>
 </html>

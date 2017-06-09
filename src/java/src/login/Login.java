@@ -49,11 +49,11 @@ public class Login extends HttpServlet {
             usuario = daologin.loginUsuario(usuario);
             if (usuario == null) {
                 request.setAttribute("mensagem", "Usuario ou Senha inválida.");
-                RequestDispatcher rd = request.getRequestDispatcher("loginSigbase.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
                 rd.forward(request, response);
             } else if (usuario.getAtivo() == 0) {
                 request.setAttribute("mensagem", "Este usuario não possui acesso ao sistema.");
-                RequestDispatcher rd = request.getRequestDispatcher("loginSigbase.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
                 rd.forward(request, response);
             } else {
                 HttpSession session = request.getSession(true);
