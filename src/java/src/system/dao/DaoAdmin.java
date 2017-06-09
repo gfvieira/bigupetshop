@@ -8,19 +8,24 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import src.system.utilidades.ErroSql;
 import src.modelo.Usuario;
 
 public class DaoAdmin {
 
-    private ConnectDataBase connectDataBase = null;
     private Statement statement;
     private ErroSql erro = null;
-    private final String classe;
+    private final String classe = "DaoAdmin";
 
-    public DaoAdmin() {
-        this.classe = "DaoAdmin";
-        connectDataBase = new ConnectDataBase();
+    private Statement getStatement() {
+        try {
+            statement = ConnectDataBase.openConection().createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return statement;
     }
 
     public Usuario buscaUsuario(Usuario usuario) {
@@ -33,13 +38,8 @@ public class DaoAdmin {
                 + "a.acesso = b.valor AND "
                 + "b.tipo = d.valor;";
         Usuario usuarioRetorno = null;
-
         try {
-            if (connectDataBase.openConection() == null) {
-                return null;//criar uma variavel no usauario pra condicao do banco
-            }
-            statement = connectDataBase.openConection().createStatement();
-            ResultSet rs = statement.executeQuery(selectTableSQL);
+            ResultSet rs = getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(usuario.getNip());
@@ -62,7 +62,7 @@ public class DaoAdmin {
             erro.Gravar(classe, "buscaUsuario", selectTableSQL, e.getMessage());
             return null;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -74,7 +74,7 @@ public class DaoAdmin {
         String insereTableSQL = "INSERT INTO usuario( "
                 + "nip, admin, ativo, nome, graduacao, guerra, setor, home, titulo, "
                 + "ramal, tipoacesso, acesso, data, hora, ip) "
-                + "VALUES ('" + usuario.getNip() + "', '"+usuario.getAdmin()+"', '1', "
+                + "VALUES ('" + usuario.getNip() + "', '" + usuario.getAdmin() + "', '1', "
                 + "'" + usuario.getNome() + "', '" + usuario.getGraduacao() + "', "
                 + "'" + usuario.getGuerra() + "', '" + usuario.getSetor() + "', "
                 + "'" + usuario.getHome() + "', '" + usuario.getTitulo() + "', "

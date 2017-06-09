@@ -7,41 +7,39 @@ import src.system.utilidades.ErroSql;
 
 public class ConnectDataBase {
 
-    public static Connection connection = null;
-    ErroSql log = null;
+    private static ConnectDataBase conexao = null;
+    private static Connection connection = null;
     private final String nomeClasse = "ConnectDataBase";
+//    ======================================================== banco postgresql
+    private final String classForName = "org.postgresql.Driver";
+    private final String conector = "postgresql";
+    private final String password = "bodeverde2001";
+    private final String user = "postgres";
+    private final String dataBase = "sigbase";
+    private final String host = "localhost";
+    private final String port = "5432";
+//    ======================================================== banco firebird
+//    private final String classForName = "org.firebirdsql.jdbc.FBDriver";
+//    private final String conector = "firebirdsql";
+//    private final String password = "masterkey";
+//    private final String user = "SYSDBA";
+//    private final String dataBase = "c:\\sistemas\\sisfolhan\\bd\\sisfolhan.gdb";
+//    private final String host = "10.5.176.4";
+//    private final String port = "3050";
 
     public ConnectDataBase() {
         try {
-            Class.forName("org.postgresql.Driver");
-            //Class.forName("org.firebirdsql.jdbc.FBDriver");
-            //Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
-        } catch (ClassNotFoundException e) {
-            log = new ErroSql();
-            log.Gravar(nomeClasse, "ConnectDataBase,", "Class.forName(\"org.postgresql.Driver\");", e.getMessage());
-
+            Class.forName("" + classForName + "");
+            connection = DriverManager.getConnection("jdbc:" + conector + "://" + host + ":" + port + "/" + dataBase + "", "" + user + "", "" + password + "");
+        } catch (ClassNotFoundException | SQLException ex) {
+            ErroSql log = new ErroSql();
+            log.Gravar(nomeClasse, "ConnectDataBase,", "criar conexao", ex.getMessage());
         }
-        /*  catch (InstantiationException | IllegalAccessException ex) {
-         java.util.logging.Logger.getLogger(ConnectDataBase.class.getName()).log(Level.SEVERE, null, ex); /*  catch (InstantiationException | IllegalAccessException ex) {
-         java.util.logging.Error.getLogger(ConnectDataBase.class.getName()).log(Level.SEVERE, null, ex); /*  catch (InstantiationException | IllegalAccessException ex) {
-         java.util.logging.Logger.getLogger(ConnectDataBase.class.getName()).log(Level.SEVERE, null, ex); /*  catch (InstantiationException | IllegalAccessException ex) {
-         java.util.logging.ErroSql.getLogger(ConnectDataBase.class.getName()).log(Level.SEVERE, null, ex);
-         }  */
-
     }
 
-    public Connection openConection() {
+    public static Connection openConection() {
         if (connection == null) {
-            try {
-                connection = DriverManager.getConnection("jdbc:postgresql://10.7.80.4:5432/sigbase", "postgres", "bodeverde2001");
-                //connection = DriverManager.getConnection("jdbc:oracle:thin:@ip_servidor:1521:instancia","usuario","senha");  
-                //connection = DriverManager.getConnection("jdbc:firebirdsql://localhost/3050:C:\\Firebird\\sisfolhan\\bd\\SISFOLHAN.GBD", "SYSDBA", "masterkey");  
-                //connection = DriverManager.getConnection("jdbc:firebirdsql://10.5.176.4:3050/c:\\sistemas\\sisfolhan\\bd\\sisfolhan.gdb", "SYSDBA", "masterkey");  
-            } catch (SQLException e) {
-                log = new ErroSql();
-                log.Gravar(nomeClasse, "openConection,", "Erro abrir conexão", e.getMessage());
-                return null;
-            }
+            conexao = new ConnectDataBase();
         }
         return connection;
     }
@@ -50,9 +48,9 @@ public class ConnectDataBase {
         if (connection != null) {
             try {
                 connection.close();
-                connection = null;
+//                connection = null;
             } catch (SQLException e) {
-                log = new ErroSql();
+                ErroSql log = new ErroSql();
                 log.Gravar(nomeClasse, "closeConnection,", "Erro fechar conexão", e.getMessage());
             }
         }
