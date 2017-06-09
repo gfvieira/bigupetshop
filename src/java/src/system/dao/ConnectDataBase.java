@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import src.system.utilidades.ErroSql;
 
 public class ConnectDataBase {
@@ -42,6 +44,9 @@ public class ConnectDataBase {
             if (connection == null) {
                 new ConnectDataBase();
             }
+//            if (connection.isValid(0) || connection.isClosed()) {
+//                connection.close();
+//            }
             statement = connection.createStatement();
         } catch (SQLException ex) {
             ErroSql.Gravar(nomeClasse, "ConnectDataBase,", "Erro abrir conexão", ex.getMessage());
@@ -49,13 +54,19 @@ public class ConnectDataBase {
         return statement;
     }
 
-    public static void closeConnection() {
+    public static void closeConnection(){
         if (connection != null) {
             try {
-                connection.close();
+                if (!connection.isClosed()) {
+                    try {
+                        connection.close();
 //                connection = null;
+                    } catch (SQLException ex) {
+                        ErroSql.Gravar(nomeClasse, "closeConnection,", "Erro fechar conexão", ex.getMessage());
+                    }
+                }
             } catch (SQLException ex) {
-                ErroSql.Gravar(nomeClasse, "closeConnection,", "Erro fechar conexão", ex.getMessage());
+                        ErroSql.Gravar(nomeClasse, "closeConnection,", "Erro fechar conexão", ex.getMessage());
             }
         }
     }
