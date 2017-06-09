@@ -33,16 +33,8 @@ public class TimerFilter implements Filter {
         if (request instanceof HttpServletRequest) {
             nome = ((HttpServletRequest) request).getRequestURI();
         }
-        if (nome.endsWith("jpg")
-                || nome.endsWith("js")
-                || nome.endsWith("css")
-                || nome.endsWith("woff")
-                || nome.endsWith("woff2")
-                || nome.endsWith("gif")
-                || nome.endsWith("GIF") 
-                || nome.endsWith("ico") 
-                || nome.endsWith("PNG")
-                || nome.endsWith("png")) {
+        if (!nome.endsWith("jsp")
+                || nome.endsWith("html")) {
 
         } else {
 //            context.log("====== TEMPO DE : "+ (fim - inicio) + "ms PARA: " +nome+" NO IP: " + ip);

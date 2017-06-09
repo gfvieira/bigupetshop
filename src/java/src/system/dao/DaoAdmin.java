@@ -2,29 +2,17 @@ package src.system.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import src.system.utilidades.ErroSql;
 import src.modelo.Usuario;
 
 public class DaoAdmin {
 
-    private Statement statement;
     private static final String nomeClasse = "DaoAdmin";
-
-    private Statement getStatement() {
-        try {
-            statement = ConnectDataBase.openConection().createStatement();
-        } catch (SQLException ex) {
-        }
-        return statement;
-    }
 
     public Usuario buscaUsuario(Usuario usuario) {
         String selectTableSQL = "SELECT a.nip, a.ativo, c.valor, c.descricao AS graduacao, "
@@ -37,7 +25,7 @@ public class DaoAdmin {
                 + "b.tipo = d.valor;";
         Usuario usuarioRetorno = null;
         try {
-            ResultSet rs = getStatement().executeQuery(selectTableSQL);
+            ResultSet rs = ConnectDataBase.getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(usuario.getNip());
@@ -79,7 +67,7 @@ public class DaoAdmin {
                 + "'" + usuario.getTipoAcesso() + "', '" + usuario.getAcesso() + "', "
                 + "'" + date + "', '" + thisSec + "', '" + usuario.getIp_access() + "');";
         try {
-            getStatement().executeUpdate(insereTableSQL);
+            ConnectDataBase.getStatement().executeUpdate(insereTableSQL);
             return true;
         } catch (SQLException e) {
             ErroSql.Gravar(nomeClasse, "insereUsuario", insereTableSQL, e.getMessage());
@@ -97,7 +85,7 @@ public class DaoAdmin {
         Usuario usuarioRetorno;
         ArrayList<Usuario> lista = new ArrayList<>();
         try {
-            ResultSet rs = getStatement().executeQuery(selectTableSQL);
+            ResultSet rs = ConnectDataBase.getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(rs.getString("nip"));
@@ -133,7 +121,7 @@ public class DaoAdmin {
                 + "acesso='" + usuario.getAcesso() + "' "
                 + "WHERE nip='" + usuario.getNip() + "';";
         try {
-            getStatement().executeUpdate(insereTableSQL);
+            ConnectDataBase.getStatement().executeUpdate(insereTableSQL);
             return true;
         } catch (SQLException e) {
             ErroSql.Gravar(nomeClasse, "atualizaUsuario", insereTableSQL, e.getMessage());
@@ -152,7 +140,7 @@ public class DaoAdmin {
                 + "nip, descricao, data, hora, ip) "
                 + "VALUES ('" + nip + "', '" + descricao + "','" + date + "', '" + thisSec + "', '" + ip + "');";
         try {
-            getStatement().executeUpdate(insereTableSQL);
+            ConnectDataBase.getStatement().executeUpdate(insereTableSQL);
             return true;
         } catch (SQLException e) {
             ErroSql.Gravar(nomeClasse, "auditoria", insereTableSQL, e.getMessage());
@@ -171,7 +159,7 @@ public class DaoAdmin {
                 + "nip, statussenha, senha, data, hora, ip) "
                 + "VALUES ('" + nip + "', '1', '" + senha + "', '" + date + "', '" + thisSec + "', '" + ip + "');";
         try {
-            getStatement().executeUpdate(insereTableSQL);
+            ConnectDataBase.getStatement().executeUpdate(insereTableSQL);
             return true;
         } catch (SQLException e) {
             ErroSql.Gravar(nomeClasse, "insereSenha", insereTableSQL, e.getMessage());
@@ -190,7 +178,7 @@ public class DaoAdmin {
         Usuario usuarioRetorno;
         ArrayList<Usuario> lista = new ArrayList<>();
         try {
-            ResultSet rs = getStatement().executeQuery(selectTableSQL);
+            ResultSet rs = ConnectDataBase.getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(rs.getString("nip"));
@@ -228,7 +216,7 @@ public class DaoAdmin {
         Usuario usuarioRetorno;
         ArrayList<Usuario> lista = new ArrayList<>();
         try {
-            ResultSet rs = getStatement().executeQuery(selectTableSQL);
+            ResultSet rs = ConnectDataBase.getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(rs.getString("nip"));
@@ -257,7 +245,7 @@ public class DaoAdmin {
         Usuario usuarioRetorno;
         ArrayList<Usuario> lista = new ArrayList<>();
         try {
-            ResultSet rs = getStatement().executeQuery(selectTableSQL);
+            ResultSet rs = ConnectDataBase.getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(rs.getString("nip"));
@@ -286,7 +274,7 @@ public class DaoAdmin {
         Usuario usuarioRetorno = null;
         ArrayList<Usuario> lista = new ArrayList<>();
         try {
-            ResultSet rs = getStatement().executeQuery(selectTableSQL);
+            ResultSet rs = ConnectDataBase.getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(rs.getString("nip"));

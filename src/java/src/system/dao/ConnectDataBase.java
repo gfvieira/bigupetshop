@@ -3,12 +3,13 @@ package src.system.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import src.system.utilidades.ErroSql;
 
 public class ConnectDataBase {
 
-    private static ConnectDataBase conexao = null;
     private static Connection connection = null;
+    private static Statement statement;
     private static final String nomeClasse = "ConnectDataBase";
 //    ======================================================== banco postgresql
     private final String classForName = "org.postgresql.Driver";
@@ -27,20 +28,25 @@ public class ConnectDataBase {
 //    private final String host = "10.5.176.4";
 //    private final String port = "3050";
 
-    public ConnectDataBase() {
+    private ConnectDataBase() {
         try {
             Class.forName("" + classForName + "");
             connection = DriverManager.getConnection("jdbc:" + conector + "://" + host + ":" + port + "/" + dataBase + "", "" + user + "", "" + password + "");
         } catch (ClassNotFoundException | SQLException ex) {
-            ErroSql.Gravar(nomeClasse, "ConnectDataBase,", "criar conexao", ex.getMessage());
+            ErroSql.Gravar(nomeClasse, "ConnectDataBase,", "Erro criar conexão", ex.getMessage());
         }
     }
 
-    public static Connection openConection() {
-        if (connection == null) {
-            conexao = new ConnectDataBase();
+    public static synchronized Statement getStatement() {
+        try {
+            if (connection == null) {
+                new ConnectDataBase();
+            }
+            statement = connection.createStatement();
+        } catch (SQLException ex) {
+            ErroSql.Gravar(nomeClasse, "ConnectDataBase,", "Erro abrir conexão", ex.getMessage());
         }
-        return connection;
+        return statement;
     }
 
     public static void closeConnection() {
@@ -48,8 +54,8 @@ public class ConnectDataBase {
             try {
                 connection.close();
 //                connection = null;
-            } catch (SQLException e) {
-                ErroSql.Gravar(nomeClasse, "closeConnection,", "Erro fechar conexão", e.getMessage());
+            } catch (SQLException ex) {
+                ErroSql.Gravar(nomeClasse, "closeConnection,", "Erro fechar conexão", ex.getMessage());
             }
         }
     }

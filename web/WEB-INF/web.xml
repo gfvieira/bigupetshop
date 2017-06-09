@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <welcome-file-list>
-        <welcome-file>loginSigbase.jsp</welcome-file>
+        <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
     <servlet>
         <servlet-name>ErrorServlet</servlet-name>
@@ -11,7 +11,6 @@
         <servlet-name>LogOff</servlet-name>
         <servlet-class>src.login.LogOff</servlet-class>
     </servlet>
-    <servlet/>
     <servlet-mapping>
         <servlet-name>ErrorServlet</servlet-name>
         <url-pattern>/error</url-pattern>

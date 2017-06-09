@@ -41,20 +41,10 @@ public class AuthenticationFilter implements Filter {
         switch (urlRequest) {
             case "/" + urlContexto + "/":
             case "/" + urlContexto + "/login.jsp":
-            case "/" + urlContexto + "/bigupetshop/Login.jsp"://servlet
+            case "/" + urlContexto + "/Login.jsp"://servlet
             case "/" + urlContexto + "/redefinirSenha.jsp"://pagina
             case "/" + urlContexto + "/AltSenha.jsp"://servlet
             case "/" + urlContexto + "/LogOff.jsp"://servlet
-            //=============================================================OFICINA BH-50
-            case "/" + urlContexto + "/oficina/oficinabh50.jsp"://pagina
-            case "/" + urlContexto + "/oficina/Oficinabh50.jsp"://servlet
-            case "/" + urlContexto + "/oficina/Bh50Consult.jsp"://servlet
-            case "/" + urlContexto + "/oficina/Bh50ConsultOs.jsp"://servlet
-            //=============================================================OFICINA BH-34
-            case "/" + urlContexto + "/telematica/telematica.jsp"://pagina
-            case "/" + urlContexto + "/telematica/Oficinabh34.jsp"://servlet
-            case "/" + urlContexto + "/telematica/SateConsult.jsp"://servlet
-            case "/" + urlContexto + "/telematica/SateConsultOs.jsp"://servlet
                 check = true;
                 break;
         }
