@@ -7,19 +7,20 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
-import src.system.utilidades.ErroSql;
 import src.modelo.Usuario;
+import src.system.utilidades.ErroSql;
 
 public class DaoLogin {
 
-    private ConnectDataBase connectDataBase = null;
     private Statement statement;
-    private ErroSql erro = new ErroSql();
-    private final String classe;
+    private static final String nomeClasse = "DaoAdmin";
 
-    public DaoLogin() {
-        this.classe = "DaoLogin";
-        connectDataBase = new ConnectDataBase();
+    private Statement getStatement() {
+        try {
+            statement = ConnectDataBase.openConection().createStatement();
+        } catch (SQLException ex) {
+        }
+        return statement;
     }
 
     public Usuario loginUsuario(Usuario usuario) {
@@ -38,11 +39,7 @@ public class DaoLogin {
                 + "b.statussenha='1';";
         Usuario usuarioRetorno = null;
         try {
-            if (connectDataBase.openConection() == null) {
-                return null;//criar uma variavel no usauario pra condicao do banco
-            }
-            statement = connectDataBase.openConection().createStatement();
-            ResultSet rs = statement.executeQuery(selectTableSQL);
+            ResultSet rs = getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(usuario.getNip());
@@ -63,10 +60,10 @@ public class DaoLogin {
             }
             return usuarioRetorno;
         } catch (SQLException e) {
-            erro.Gravar(classe, "loginUsuario", selectTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "loginUsuario", selectTableSQL, e.getMessage());
             return null;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -80,19 +77,13 @@ public class DaoLogin {
                 + "VALUES ('" + usuario.getNip() + "', '1', '" + usuario.getNip() + "', "
                 + "'" + date + "', '" + thisSec + "', '" + usuario.getIp_access() + "');";
         try {
-            if (connectDataBase.openConection() == null) {
-                return false;
-            }
-            statement = connectDataBase.openConection().createStatement();
-            statement.executeUpdate(insereTableSQL);
-            statement.close();
-            connectDataBase.closeConnection();
+            getStatement().executeUpdate(insereTableSQL);
             return true;
         } catch (SQLException e) {
-            erro.Gravar(classe, "insereSenha", insereTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "insereSenha", insereTableSQL, e.getMessage());
             return false;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -103,22 +94,16 @@ public class DaoLogin {
         LocalTime thisSec = LocalTime.parse(t);
         String insereTableSQL = "INSERT INTO usuario_logon("
                 + "nip, id_session, data, hora, ip) "
-                + "VALUES ('"+usuario.getNip()+"', '"+usuario.getId_session()+"', "
-                + "'"+date+"', '"+thisSec+"', '"+usuario.getIp_access()+"');";
+                + "VALUES ('" + usuario.getNip() + "', '" + usuario.getId_session() + "', "
+                + "'" + date + "', '" + thisSec + "', '" + usuario.getIp_access() + "');";
         try {
-            if (connectDataBase.openConection() == null) {
-                return false;
-            }
-            statement = connectDataBase.openConection().createStatement();
-            statement.executeUpdate(insereTableSQL);
-            statement.close();
-            connectDataBase.closeConnection();
+            getStatement().executeUpdate(insereTableSQL);
             return true;
         } catch (SQLException e) {
-            erro.Gravar(classe, "lastAccess", insereTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "lastAccess", insereTableSQL, e.getMessage());
             return false;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -127,19 +112,13 @@ public class DaoLogin {
                 + "SET statussenha='0'"
                 + " WHERE nip = '" + usuario.getNip() + "';";
         try {
-            if (connectDataBase.openConection() == null) {
-                return false;
-            }
-            statement = connectDataBase.openConection().createStatement();
-            statement.executeUpdate(updateTableSQL);
-            statement.close();
-            connectDataBase.closeConnection();
+            getStatement().executeUpdate(updateTableSQL);
             return true;
         } catch (SQLException e) {
-            erro.Gravar(classe, "zeraSenha", updateTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "zeraSenha", updateTableSQL, e.getMessage());
             return false;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -153,14 +132,11 @@ public class DaoLogin {
                 + "VALUES ('" + usuario.getNip() + "', '" + msg + "', "
                 + "'" + date + "', '" + thisSec + "', '" + usuario.getIp_access() + "');";
         try {
-            statement = connectDataBase.openConection().createStatement();
-            statement.executeUpdate(insereTableSQL);
-            statement.close();
-            connectDataBase.closeConnection();
+            getStatement().executeUpdate(insereTableSQL);
         } catch (SQLException e) {
-            erro.Gravar(classe, "auditoria", insereTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "auditoria", insereTableSQL, e.getMessage());
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 

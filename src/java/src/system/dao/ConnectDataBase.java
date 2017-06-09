@@ -9,7 +9,7 @@ public class ConnectDataBase {
 
     private static ConnectDataBase conexao = null;
     private static Connection connection = null;
-    private final String nomeClasse = "ConnectDataBase";
+    private static final String nomeClasse = "ConnectDataBase";
 //    ======================================================== banco postgresql
     private final String classForName = "org.postgresql.Driver";
     private final String conector = "postgresql";
@@ -32,8 +32,7 @@ public class ConnectDataBase {
             Class.forName("" + classForName + "");
             connection = DriverManager.getConnection("jdbc:" + conector + "://" + host + ":" + port + "/" + dataBase + "", "" + user + "", "" + password + "");
         } catch (ClassNotFoundException | SQLException ex) {
-            ErroSql log = new ErroSql();
-            log.Gravar(nomeClasse, "ConnectDataBase,", "criar conexao", ex.getMessage());
+            ErroSql.Gravar(nomeClasse, "ConnectDataBase,", "criar conexao", ex.getMessage());
         }
     }
 
@@ -44,14 +43,13 @@ public class ConnectDataBase {
         return connection;
     }
 
-    public void closeConnection() {
+    public static void closeConnection() {
         if (connection != null) {
             try {
                 connection.close();
 //                connection = null;
             } catch (SQLException e) {
-                ErroSql log = new ErroSql();
-                log.Gravar(nomeClasse, "closeConnection,", "Erro fechar conexão", e.getMessage());
+                ErroSql.Gravar(nomeClasse, "closeConnection,", "Erro fechar conexão", e.getMessage());
             }
         }
     }

@@ -16,14 +16,12 @@ import src.modelo.Usuario;
 public class DaoAdmin {
 
     private Statement statement;
-    private ErroSql erro = null;
-    private final String classe = "DaoAdmin";
+    private static final String nomeClasse = "DaoAdmin";
 
     private Statement getStatement() {
         try {
             statement = ConnectDataBase.openConection().createStatement();
         } catch (SQLException ex) {
-            Logger.getLogger(DaoAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
         return statement;
     }
@@ -58,8 +56,7 @@ public class DaoAdmin {
             }
             return usuarioRetorno;
         } catch (SQLException e) {
-            erro = new ErroSql();
-            erro.Gravar(classe, "buscaUsuario", selectTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "buscaUsuario", selectTableSQL, e.getMessage());
             return null;
         } finally {
             ConnectDataBase.closeConnection();
@@ -82,18 +79,13 @@ public class DaoAdmin {
                 + "'" + usuario.getTipoAcesso() + "', '" + usuario.getAcesso() + "', "
                 + "'" + date + "', '" + thisSec + "', '" + usuario.getIp_access() + "');";
         try {
-            if (connectDataBase.openConection() == null) {
-                return false;
-            }
-            statement = connectDataBase.openConection().createStatement();
-            statement.executeUpdate(insereTableSQL);
+            getStatement().executeUpdate(insereTableSQL);
             return true;
         } catch (SQLException e) {
-            erro = new ErroSql();
-            erro.Gravar(classe, "insereUsuario", insereTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "insereUsuario", insereTableSQL, e.getMessage());
             return false;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -102,14 +94,10 @@ public class DaoAdmin {
                 + " FROM usuario a, aux_acesso b, aux_postograduacao c "
                 + "WHERE a.graduacao = c.valor AND "
                 + "a.acesso = b.valor;";
-        Usuario usuarioRetorno = null;
+        Usuario usuarioRetorno;
         ArrayList<Usuario> lista = new ArrayList<>();
         try {
-            if (connectDataBase.openConection() == null) {
-                return null;//criar uma variavel no usauario pra condicao do banco
-            }
-            statement = connectDataBase.openConection().createStatement();
-            ResultSet rs = statement.executeQuery(selectTableSQL);
+            ResultSet rs = getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(rs.getString("nip"));
@@ -123,11 +111,10 @@ public class DaoAdmin {
             }
             return lista;
         } catch (SQLException e) {
-            erro = new ErroSql();
-            erro.Gravar(classe, "listaUsuario", selectTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "listaUsuario", selectTableSQL, e.getMessage());
             return null;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -146,18 +133,13 @@ public class DaoAdmin {
                 + "acesso='" + usuario.getAcesso() + "' "
                 + "WHERE nip='" + usuario.getNip() + "';";
         try {
-            if (connectDataBase.openConection() == null) {
-                return false;
-            }
-            statement = connectDataBase.openConection().createStatement();
-            statement.executeUpdate(insereTableSQL);
+            getStatement().executeUpdate(insereTableSQL);
             return true;
         } catch (SQLException e) {
-            erro = new ErroSql();
-            erro.Gravar(classe, "atualizaUsuario", insereTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "atualizaUsuario", insereTableSQL, e.getMessage());
             return false;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -170,18 +152,13 @@ public class DaoAdmin {
                 + "nip, descricao, data, hora, ip) "
                 + "VALUES ('" + nip + "', '" + descricao + "','" + date + "', '" + thisSec + "', '" + ip + "');";
         try {
-            if (connectDataBase.openConection() == null) {
-                return false;
-            }
-            statement = connectDataBase.openConection().createStatement();
-            statement.executeUpdate(insereTableSQL);
+            getStatement().executeUpdate(insereTableSQL);
             return true;
         } catch (SQLException e) {
-            erro = new ErroSql();
-            erro.Gravar(classe, "auditoria", insereTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "auditoria", insereTableSQL, e.getMessage());
             return false;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -194,18 +171,13 @@ public class DaoAdmin {
                 + "nip, statussenha, senha, data, hora, ip) "
                 + "VALUES ('" + nip + "', '1', '" + senha + "', '" + date + "', '" + thisSec + "', '" + ip + "');";
         try {
-            if (connectDataBase.openConection() == null) {
-                return false;
-            }
-            statement = connectDataBase.openConection().createStatement();
-            statement.executeUpdate(insereTableSQL);
+            getStatement().executeUpdate(insereTableSQL);
             return true;
         } catch (SQLException e) {
-            erro = new ErroSql();
-            erro.Gravar(classe, "insereSenha", insereTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "insereSenha", insereTableSQL, e.getMessage());
             return false;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -215,14 +187,10 @@ public class DaoAdmin {
                 + "WHERE a.ativo = '0' AND "
                 + "a.graduacao = c.valor AND "
                 + "a.acesso = b.valor;";
-        Usuario usuarioRetorno = null;
+        Usuario usuarioRetorno;
         ArrayList<Usuario> lista = new ArrayList<>();
         try {
-            if (connectDataBase.openConection() == null) {
-                return null;//criar uma variavel no usauario pra condicao do banco
-            }
-            statement = connectDataBase.openConection().createStatement();
-            ResultSet rs = statement.executeQuery(selectTableSQL);
+            ResultSet rs = getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(rs.getString("nip"));
@@ -236,11 +204,10 @@ public class DaoAdmin {
             }
             return lista;
         } catch (SQLException e) {
-            erro = new ErroSql();
-            erro.Gravar(classe, "listaUsuarioDesativado", selectTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "listaUsuarioDesativado", selectTableSQL, e.getMessage());
             return null;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -258,14 +225,10 @@ public class DaoAdmin {
                 + "WHERE a.tipoacesso = '" + tipo + "' AND "
                 + "a.graduacao = c.valor AND "
                 + "a.acesso = b.valor;";
-        Usuario usuarioRetorno = null;
+        Usuario usuarioRetorno;
         ArrayList<Usuario> lista = new ArrayList<>();
         try {
-            if (connectDataBase.openConection() == null) {
-                return null;//criar uma variavel no usauario pra condicao do banco
-            }
-            statement = connectDataBase.openConection().createStatement();
-            ResultSet rs = statement.executeQuery(selectTableSQL);
+            ResultSet rs = getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(rs.getString("nip"));
@@ -279,11 +242,10 @@ public class DaoAdmin {
             }
             return lista;
         } catch (SQLException e) {
-            erro = new ErroSql();
-            erro.Gravar(classe, "listaUsuario", selectTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "listaUsuario", selectTableSQL, e.getMessage());
             return null;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -292,14 +254,10 @@ public class DaoAdmin {
         String selectTableSQL = "SELECT *"
                 + " FROM usuario_logon "
                 + "WHERE data = '" + date + "';";
-        Usuario usuarioRetorno = null;
+        Usuario usuarioRetorno;
         ArrayList<Usuario> lista = new ArrayList<>();
         try {
-            if (connectDataBase.openConection() == null) {
-                return null;//criar uma variavel no usauario pra condicao do banco
-            }
-            statement = connectDataBase.openConection().createStatement();
-            ResultSet rs = statement.executeQuery(selectTableSQL);
+            ResultSet rs = getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(rs.getString("nip"));
@@ -313,11 +271,10 @@ public class DaoAdmin {
             }
             return lista;
         } catch (SQLException e) {
-            erro = new ErroSql();
-            erro.Gravar(classe, "listaUsuario", selectTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "listaUsuario", selectTableSQL, e.getMessage());
             return null;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 
@@ -329,11 +286,7 @@ public class DaoAdmin {
         Usuario usuarioRetorno = null;
         ArrayList<Usuario> lista = new ArrayList<>();
         try {
-            if (connectDataBase.openConection() == null) {
-                return null;//criar uma variavel no usauario pra condicao do banco
-            }
-            statement = connectDataBase.openConection().createStatement();
-            ResultSet rs = statement.executeQuery(selectTableSQL);
+            ResultSet rs = getStatement().executeQuery(selectTableSQL);
             while (rs.next()) {
                 usuarioRetorno = new Usuario();
                 usuarioRetorno.setNip(rs.getString("nip"));
@@ -347,11 +300,10 @@ public class DaoAdmin {
             }
             return lista;
         } catch (SQLException e) {
-            erro = new ErroSql();
-            erro.Gravar(classe, "listaUsuario", selectTableSQL, e.getMessage());
+            ErroSql.Gravar(nomeClasse, "listaUsuario", selectTableSQL, e.getMessage());
             return null;
         } finally {
-            connectDataBase.closeConnection();
+            ConnectDataBase.closeConnection();
         }
     }
 }
